@@ -9,7 +9,7 @@ The router's aim is to execute a series of chained swaps on pairs in the Mento A
 As an example we can look at the path USDC->cUSD->cKES. But this can be anything as long as two adjecent assets represent a tradable pair in the Broker.
 
 This path has two swaps or steps: USDC->cUSD and cUSD->cKES.
-In order to specificy a path the MentoRouter defines the following struct (as seen in IMentoRouter.sol):
+In order to specificy a path the MentoRouter defines the following struct (as seen in [IMentoRouter.sol](./src/IMentoRouter.sol)):
 
 ```solidity
 struct Step {
@@ -33,7 +33,7 @@ IMentoRouter.Step memory USDC_to_cUSD = IMentoRouter.Step({
 
 And for cUSD->cKES, the step is:
 
-```
+```solidity
 IMentoRouter.Step memory cUSD_to_cKES = IMentoRouter.Step({
     exchangeProvider: 0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901,
     exchangeId: 0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b,
@@ -82,3 +82,15 @@ mentoRouter.swapExactTokensForTokens(1e3, 0, path);
 You can see more examples in the [Swap Script](./script/Swap.s.sol) or the [Test](./test/MentoRouter.t.sol);
 
 The contract is verified on CeloScan and the ABI can be extracted from there.
+
+#### Example run
+
+This [transaction](https://celoscan.io/tx/0xe683c1e493d28714b31250f9b3ccc4cd2774ae6d9d4e267326addd41d0336533) is a test swap for a 4 step path USDC->cUSD->axlUSDC->EURC.
+As seen in the token transfers it results in these swaps:
+
+- 0.000978 USDC for 0.000977795736428426 cUSD
+- 0.000977795736428426 cUSD for 0.000977 axlUSDC
+- 0.000977 axlUSDC for 0.000898580333944413 cEUR
+- 0.000898580333944413 cEUR for 0.0009 EURC
+
+The net token transfers are 000978 USDC for 0.0009 EURC
