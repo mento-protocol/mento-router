@@ -2,10 +2,13 @@
 
 pragma solidity ^0.8.20;
 
-import {console} from "forge-std/console.sol";
 import {IBroker} from "./IBroker.sol";
 import {TransferHelper} from "./TransferHelper.sol";
 import {IMentoRouter} from "./IMentoRouter.sol";
+
+interface IERC20 {
+    function balanceOf(address account) external view returns (uint256);
+}
 
 /// @title MentoRouter
 /// @dev Implementation of the IMentoRouter interface for token swaps through a broker.
@@ -13,10 +16,15 @@ contract MentoRouter is IMentoRouter {
     /// @notice The broker contract used for executing swaps
     IBroker immutable broker;
 
+    /// @notice An address where funds can be drained to in case of issues
+    /// that result in funds getting locked in the contract.
+    address immutable mentoReserveMultisig;
+
     /// @notice Constructor to set the broker address
     /// @param _broker The address of the broker contract
-    constructor(address _broker) {
+    constructor(address _broker, address _mentoReserveMultisig) {
         broker = IBroker(_broker);
+        mentoReserveMultisig = _mentoReserveMultisig;
     }
 
     /// @notice Swap an exact amount of input tokens for as many output tokens as possible
@@ -67,6 +75,16 @@ contract MentoRouter is IMentoRouter {
         swap(amounts, path);
     }
 
+    /// @notice Drain all of the contract's balance of a given asset to the reserve multisig
+    /// @param asset The address of the asset to drain
+    function drain(address asset) external {
+        TransferHelper.safeTransfer(
+            asset,
+            mentoReserveMultisig,
+            IERC20(asset).balanceOf(address(this))
+        );
+    }
+
     /// @notice Internal function to execute the swap steps
     /// @param amounts The amounts of tokens for each step in the path
     /// @param path An array of Step structs defining the swap path
@@ -81,7 +99,7 @@ contract MentoRouter is IMentoRouter {
                 amounts[i]
             );
 
-            broker.swapIn(
+            amounts[i + 1] = broker.swapIn(
                 path[i].exchangeProvider,
                 path[i].exchangeId,
                 path[i].assetIn,
@@ -132,7 +150,6 @@ contract MentoRouter is IMentoRouter {
         require(path.length >= 2, "MentoRouter: INVALID_PATH");
         amounts = new uint256[](path.length + 1);
         amounts[amounts.length - 1] = amountOut;
-        console.log(amountOut);
         for (uint i = path.length; i > 0; i--) {
             amounts[i - 1] = (broker.getAmountIn(
                 path[i - 1].exchangeProvider,
@@ -141,7 +158,6 @@ contract MentoRouter is IMentoRouter {
                 path[i - 1].assetOut,
                 amounts[i]
             ) + 1); // mAgIk nUmbEr to fix USDC low decimal rounding.
-            console.log(amounts[i - 1]);
         }
         return amounts;
     }

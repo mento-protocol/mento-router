@@ -12,7 +12,8 @@ contract Deploy is Script {
             0x604f9bff763823555b515b8717316bc84b0c250f43e7604fb9a967214b9982b3
         );
         mentoRouter = new MentoRouter(
-            0x777A8255cA72412f0d706dc03C9D1987306B4CaD
+            0x777A8255cA72412f0d706dc03C9D1987306B4CaD,
+            0x87647780180B8f55980C7D3fFeFe08a9B29e9aE1
         );
         vm.stopBroadcast();
         console.log("MentoRouter deployed at:", address(mentoRouter));

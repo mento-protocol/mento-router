@@ -36,4 +36,8 @@ interface IMentoRouter {
         uint amountInMax,
         Step[] calldata path
     ) external returns (uint[] memory amounts);
+
+    /// @notice Drain all of the contract's balance of a given asset to the reserve multisig
+    /// @param asset The address of the asset to drain
+    function drain(address asset) external;
 }
