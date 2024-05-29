@@ -12,7 +12,7 @@ contract Swap is Script {
     IBroker constant broker =
         IBroker(0x777A8255cA72412f0d706dc03C9D1987306B4CaD);
     MentoRouter constant mentoRouter =
-        MentoRouter(0x8263B5d2553CF13b7c4E2dC288F5fe1fE375f56b);
+        MentoRouter(0xBE729350F8CdFC19DB6866e8579841188eE57f67);
 
     function setUp() public {
         vm.label(bpm, "BiPoolManager");

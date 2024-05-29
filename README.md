@@ -1,7 +1,9 @@
 ## MentoRouter
 
 A UniswapRouter-style Router for the Mento AMM.
-Deployed to mainnet at 0x8263B5d2553CF13b7c4E2dC288F5fe1fE375f56b. See on [CeloScan](https://celoscan.io/address/0x8263b5d2553cf13b7c4e2dc288f5fe1fe375f56b).
+Deployed to mainnet at 0xBE729350F8CdFC19DB6866e8579841188eE57f67. See on [CeloScan](https://celoscan.io/address/0xBE729350F8CdFC19DB6866e8579841188eE57f67).
+
+The contract is verified on CeloScan and the ABI can be extracted from there.
 
 ### How does it work?
 
@@ -81,16 +83,21 @@ mentoRouter.swapExactTokensForTokens(1e3, 0, path);
 
 You can see more examples in the [Swap Script](./script/Swap.s.sol) or the [Test](./test/MentoRouter.t.sol);
 
-The contract is verified on CeloScan and the ABI can be extracted from there.
+You can also estimate a path by calling one of the two functions:
+
+- `getAmountOut(uint256 amountIn, Step[] path)` - which returns how much of the last asset in the chain you will get for a given amount of the first.
+- `getAmountIn(uint256 amuntOut, Step[], path)` - which returns how much of the first asset in the chain is required to get a certain amount of the last asset in the chain.
+
+These functions should be used in conjuction with the `amountInMax` and `amountOutMin` variables of the swap functions in order to control slippage.
 
 #### Example run
 
-This [transaction](https://celoscan.io/tx/0xe683c1e493d28714b31250f9b3ccc4cd2774ae6d9d4e267326addd41d0336533) is a test swap for a 4 step path USDC->cUSD->axlUSDC->EURC.
+This [transaction](https://celoscan.io/tx/0x105057c33b90dcc3da37609e56bd0d1295d4a29016ec8c6f3da058eb192d7fbe) is a test swap for a 4 step path USDC->cUSD->axlUSDC->EURC.
 As seen in the token transfers it results in these swaps:
 
-- 0.000978 USDC for 0.000977795736428426 cUSD
-- 0.000977795736428426 cUSD for 0.000977 axlUSDC
-- 0.000977 axlUSDC for 0.000898580333944413 cEUR
-- 0.000898580333944413 cEUR for 0.0009 EURC
+- 0.000978 USDC for 0.000977775065868 cUSD
+- 0.000977775065868 cUSD for 0.000977 axlUSDC
+- 0.000977 axlUSDC for 0.000898586312316351 cEUR
+- 0.000898586312316351 cEUR for 0.0009 EURC
 
 The net token transfers are 000978 USDC for 0.0009 EURC
