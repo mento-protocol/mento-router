@@ -1,0 +1,181 @@
+{
+  "compiler": {
+    "version": "0.8.24+commit.e11b9ed9"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_broker",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amountIn",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amountOutMin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "struct MentoRouter.Step[]",
+            "name": "path",
+            "type": "tuple[]",
+            "components": [
+              {
+                "internalType": "address",
+                "name": "exchangeProvider",
+                "type": "address"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "exchangeId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "address",
+                "name": "assetIn",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "assetOut",
+                "type": "address"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "swapExactTokensForTokens",
+        "outputs": [
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          }
+        ]
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amountOut",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amountInMax",
+            "type": "uint256"
+          },
+          {
+            "internalType": "struct MentoRouter.Step[]",
+            "name": "path",
+            "type": "tuple[]",
+            "components": [
+              {
+                "internalType": "address",
+                "name": "exchangeProvider",
+                "type": "address"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "exchangeId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "address",
+                "name": "assetIn",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "assetOut",
+                "type": "address"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "swapTokensForExactTokens",
+        "outputs": [
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          }
+        ]
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {},
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {},
+      "version": 1
+    }
+  },
+  "settings": {
+    "remappings": [
+      "@ds/=lib/multicall/lib/ds-test/src/",
+      "@std/=lib/multicall/lib/forge-std/src/",
+      "ds-test/=lib/multicall/lib/ds-test/src/",
+      "forge-std/=lib/forge-std/src/",
+      "multicall/=lib/multicall/src/"
+    ],
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "compilationTarget": {
+      "src/MentoRouter.sol": "MentoRouter"
+    },
+    "evmVersion": "paris",
+    "libraries": {}
+  },
+  "sources": {
+    "src/IBroker.sol": {
+      "keccak256": "0x7f548ab0f7ab66a505c89394133a39c17d0d75c6d18b86226396c7c4d7901daa",
+      "urls": [
+        "bzz-raw://cef0bca0c98c56ab0895ef7b1669c54c8120711cc0ef179f3570101988f85afb",
+        "dweb:/ipfs/QmUxTHaFCm4g1FWe59xQ3W6QE3LT7TF87YWebuxFP9MQ9D"
+      ],
+      "license": "GPL-3.0-or-later"
+    },
+    "src/MentoRouter.sol": {
+      "keccak256": "0x375fe2689f6f6444408e7e9303fb2535215d1c43266df5fbf5e7d69657156507",
+      "urls": [
+        "bzz-raw://0d3a5b9353a6f7d9ba6aebbaab60ae9db3774395771402ac6298398c7616d10f",
+        "dweb:/ipfs/QmbtKRvcQCVNUN7eYLhvyri9cybGPj9rABpzsLMmGwtUxA"
+      ],
+      "license": "GPL-3.0-or-later"
+    },
+    "src/TransferHelper.sol": {
+      "keccak256": "0x2e60cd726343b1bef48f468232c438fc110a40bcc7f033e27854409030007310",
+      "urls": [
+        "bzz-raw://b63947fdf6e2bd9af9c79c4ace2316dae8ae11290100625d7596b81876ad800c",
+        "dweb:/ipfs/QmdTSuUMhFFT3YdapHEze3mQSFJyKSYXDLiozbVaPNUDAN"
+      ],
+      "license": "GPL-3.0-or-later"
+    }
+  },
+  "version": 1
+}
